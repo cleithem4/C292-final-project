@@ -1,15 +1,37 @@
-[gd_scene format=3 uid="uid://ce5v6b3sbaakv"]
+[gd_scene load_steps=3 format=3 uid="uid://ce5v6b3sbaakv"]
+
+[ext_resource type="PackedScene" uid="uid://urds3bvn72tp" path="res://castle/castle.tscn" id="1_itskn"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_r324k"]
 
 [node name="main" type="Node2D"]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_left = -38.0
-offset_top = -16.0
-offset_right = 1353.0
-offset_bottom = 683.0
-color = Color(0, 0.729412, 0.317647, 1)
+script = ExtResource("1_r324k")
 
 [node name="TileMap" type="TileMap" parent="."]
 format = 2
+
+[node name="Castle" parent="." instance=ExtResource("1_itskn")]
+position = Vector2(625, 355)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = -0.0234375
+anchor_top = -0.028125
+anchor_right = 1.06328
+anchor_bottom = 1.06406
+offset_right = -6.10352e-05
+offset_bottom = 1.52588e-05
+color = Color(0, 0.670588, 0.290196, 1)
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Button" type="Button" parent="."]
+offset_left = 507.0
+offset_top = 476.0
+offset_right = 774.0
+offset_bottom = 623.0
+text = "spawn enemy"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
