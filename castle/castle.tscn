@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://urds3bvn72tp"]
+[gd_scene load_steps=11 format=3 uid="uid://urds3bvn72tp"]
 
 [ext_resource type="Script" path="res://scripts/castle.gd" id="1_5vgnc"]
 [ext_resource type="Texture2D" uid="uid://brklrip3oy74w" path="res://assets/kenney_platformer-pack-medieval/Spritesheet/medieval_spritesheet.png" id="1_w24jp"]
+[ext_resource type="FontFile" uid="uid://cowla0c68jgo8" path="res://assets/Merchandise-X31Za.ttf" id="3_ktrk5"]
+[ext_resource type="PackedScene" uid="uid://ww2oynrubo0x" path="res://assets/fire_particles.tscn" id="4_yvtu4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lf1ay"]
 texture = ExtResource("1_w24jp")
@@ -417,18 +419,66 @@ sources/2 = SubResource("TileSetAtlasSource_lf1ay")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nawp6"]
 size = Vector2(212, 282)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a6v6g"]
+bg_color = Color(0, 0, 0, 0.34902)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxy27"]
+bg_color = Color(0.988235, 0.52549, 0.486275, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Theme" id="Theme_8783t"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_a6v6g")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_hxy27")
+
 [node name="Castle" type="StaticBody2D" groups=["castle", "player"]]
 scale = Vector2(0.6, 0.6)
 script = ExtResource("1_5vgnc")
 
 [node name="level_one_castle-sprite" type="TileMap" parent="."]
 position = Vector2(-40, 15)
+rotation = 0.000118619
 tile_set = SubResource("TileSet_hv13i")
 format = 2
-layer_0/tile_data = PackedInt32Array(-65537, 458754, 19, -1, 393218, 24, -196608, 524290, 6, -131072, 262146, 7, -65536, 262146, 24, -65535, 393218, 22, 65535, 393218, 24, 0, 458754, 0, 1, 393218, 22, -131071, 458754, 17)
+layer_0/tile_data = PackedInt32Array(-65537, 458754, 19, -1, 393218, 24, -196608, 524290, 6, -131072, 262146, 7, -65536, 262146, 24, -65535, 393218, 22, 65535, 393218, 24, 0, 458754, 0, 1, 393218, 22, -131071, 458754, 17, -262144, 196610, 14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-5, -54)
+position = Vector2(-8.33331, -56.6667)
 shape = SubResource("RectangleShape2D_nawp6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="health_bar" type="ProgressBar" parent="."]
+offset_left = -111.667
+offset_top = -170.0
+offset_right = 100.333
+offset_bottom = -143.0
+theme = SubResource("Theme_8783t")
+value = 50.0
+show_percentage = false
+
+[node name="BoxContainer" type="BoxContainer" parent="health_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -17.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="health_bar/BoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_ktrk5")
+theme_override_font_sizes/font_size = 50
+text = "5"
+
+[node name="fire_particles" parent="." instance=ExtResource("4_yvtu4")]
+position = Vector2(-6.66667, -245)

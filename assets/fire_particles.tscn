@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://ww2oynrubo0x"]
+
+[ext_resource type="Texture2D" uid="uid://dtdwbfdfunaqy" path="res://assets/flame_02.png" id="1_qhure"]
+[ext_resource type="Texture2D" uid="uid://qjbmb40r3kje" path="res://assets/flame_04.png" id="2_nqwy1"]
+[ext_resource type="Texture2D" uid="uid://bbsh5vcl772tx" path="res://assets/smoke_02.png" id="3_w7nky"]
+
+[sub_resource type="Gradient" id="Gradient_bft28"]
+offsets = PackedFloat32Array(0, 0.7, 0.82, 1)
+colors = PackedColorArray(0.978441, 0.65192, 1.15514e-06, 1, 0.968627, 0.486275, 0, 1, 0.878431, 0.584314, 0, 0.188235, 0.929412, 0.882353, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_uxuk0"]
+offsets = PackedFloat32Array(0, 0.486667, 0.82, 1)
+colors = PackedColorArray(1, 0.52549, 0, 1, 0.917647, 0.537255, 0, 1, 0.933333, 0.431373, 0, 0.188235, 0.929412, 0.882353, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_8c323"]
+offsets = PackedFloat32Array(0, 0.486667, 0.82)
+colors = PackedColorArray(0.94902, 0.207843, 0, 0.133333, 0.917647, 0.537255, 0, 1, 1, 0.47451, 0.172549, 0.384314)
+
+[node name="fire_particles" type="CPUParticles2D" groups=["overlay"]]
+amount = 30
+randomness = 0.76
+lifetime_randomness = 0.91
+texture = ExtResource("1_qhure")
+emission_shape = 1
+emission_sphere_radius = 15.0
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 40.0
+damping_min = 9.091
+damping_max = 23.232
+scale_amount_min = 0.05
+scale_amount_max = 0.05
+color_ramp = SubResource("Gradient_bft28")
+
+[node name="fire_particles" type="CPUParticles2D" parent="."]
+amount = 30
+lifetime = 0.75
+randomness = 0.76
+lifetime_randomness = 0.91
+texture = ExtResource("2_nqwy1")
+emission_shape = 1
+emission_sphere_radius = 15.0
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 40.0
+damping_min = 10.101
+damping_max = 11.111
+scale_amount_min = 0.05
+scale_amount_max = 0.05
+color_ramp = SubResource("Gradient_uxuk0")
+
+[node name="fire_particles2" type="CPUParticles2D" parent="."]
+position = Vector2(0, -8)
+amount = 30
+lifetime = 1.5
+randomness = 0.76
+lifetime_randomness = 0.91
+texture = ExtResource("3_w7nky")
+emission_shape = 1
+emission_sphere_radius = 15.0
+direction = Vector2(0, -1)
+spread = 12.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 40.0
+damping_min = 9.091
+damping_max = 23.232
+scale_amount_min = 0.05
+scale_amount_max = 0.05
+color_ramp = SubResource("Gradient_8c323")

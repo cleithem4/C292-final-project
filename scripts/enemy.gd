@@ -14,6 +14,8 @@ var dead = false
 var attack_radius = 100.0
 var atk_dmg = 10.0
 var able_to_attack = true
+var health = 20.0
+
 
 func _ready():
 	pass
@@ -45,7 +47,7 @@ func _physics_process(delta):
 			if able_to_attack:
 				attack(enemy)
 			return
-	if velocity > Vector2.ZERO:
+	if velocity.length() > 0:
 		animationPlayer.play("walk")
 	else:
 		animationPlayer.play("idle")
@@ -55,12 +57,11 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-func move_towards_enemy():
-	pass
-
-
 func attack(enemy):
-	animationPlayer.play("attack")
+	if global_position.x < enemy.global_position.x:
+		animationPlayer.play("attack")
+	else:
+		animationPlayer.play("attack_left")
 	if enemy.has_method("damage"):
 		var attack = Attack.new()
 		attack.attack_damage = atk_dmg
@@ -78,7 +79,6 @@ func select_enemy():
 		if distance < closest_distance:
 			enemy = e
 			closest_distance = distance
-
 
 
 func _on_attack_radius_body_entered(body):
