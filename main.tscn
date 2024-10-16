@@ -6,9 +6,6 @@
 [node name="main" type="Node2D"]
 script = ExtResource("1_r324k")
 
-[node name="TileMap" type="TileMap" parent="."]
-format = 2
-
 [node name="Castle" parent="." instance=ExtResource("1_itskn")]
 position = Vector2(625, 355)
 

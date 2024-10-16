@@ -1,16 +1,19 @@
 extends CharacterBody2D
 
-const SPEED = 5.0
+const SPEED = 1.0
 @onready var animationPlayer = $AnimationPlayer
 @export var repulsionArea : Area2D
 @export var attackRadius : Area2D
+@onready var attack_rate_timer = $attack_rate
 
 var repulsionForce_array = []
 var enemy_units = []
 var enemy = null
 var screen_size = Vector2(1280,640)
 var dead = false
-var attack_radius = 20.0
+var attack_radius = 100.0
+var atk_dmg = 10.0
+var able_to_attack = true
 
 func _ready():
 	pass
@@ -38,18 +41,32 @@ func _physics_process(delta):
 		velocity += SPEED * direction
 		global_position += velocity * delta
 		if global_position.distance_to(enemy.global_position) < attack_radius:
+			velocity = Vector2.ZERO
+			if able_to_attack:
+				attack(enemy)
 			return
-	
+	if velocity > Vector2.ZERO:
+		animationPlayer.play("walk")
+	else:
+		animationPlayer.play("idle")
 	global_position.x = clamp(global_position.x,0,screen_size.x)
 	global_position.y = clamp(global_position.y,0,screen_size.y)
 	global_position += velocity
 	move_and_slide()
 
+
 func move_towards_enemy():
 	pass
 
 
-
+func attack(enemy):
+	animationPlayer.play("attack")
+	if enemy.has_method("damage"):
+		var attack = Attack.new()
+		attack.attack_damage = atk_dmg
+		enemy.damage(attack)
+		able_to_attack = false
+		attack_rate_timer.start()
 
 
 func select_enemy():
@@ -80,3 +97,7 @@ func _on_replusion_force_body_entered(body):
 func _on_replusion_force_body_exited(body):
 	if body != self and body.is_in_group("unit"):
 		repulsionForce_array.erase(body)
+
+
+func _on_attack_rate_timeout():
+	able_to_attack = true
