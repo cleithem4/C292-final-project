@@ -69,6 +69,10 @@ func attack(enemy):
 		able_to_attack = false
 		attack_rate_timer.start()
 
+func damage(attack: Attack):
+	health -= attack.attack_damage
+	if health <= 0:
+		queue_free()
 
 func select_enemy():
 	var closest_distance = 99999999

@@ -482,3 +482,11 @@ text = "5"
 
 [node name="fire_particles" parent="." instance=ExtResource("4_yvtu4")]
 position = Vector2(-6.66667, -245)
+
+[node name="fireball_spawn" type="Marker2D" parent="."]
+position = Vector2(-5.453, -245.35)
+
+[node name="reload" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="reload" to="." method="_on_reload_timeout"]

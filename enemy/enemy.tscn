@@ -157,7 +157,7 @@ _data = {
 "walk": SubResource("Animation_n7xr3")
 }
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("repulsionArea", "attackRadius") groups=["unit"]]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("repulsionArea", "attackRadius") groups=["enemy", "unit"]]
 script = ExtResource("1_2olbb")
 repulsionArea = NodePath("replusionForce")
 attackRadius = NodePath("attackRadius")
