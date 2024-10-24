@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cndvqxebxp0ub"]
+
+[ext_resource type="Script" path="res://Scripts/coin_death_effect.gd" id="1_wb4ux"]
+[ext_resource type="PackedScene" uid="uid://bg3jc8voki3qt" path="res://coin.tscn" id="2_xqwyl"]
+
+[node name="coin_death_effect" type="Node2D"]
+script = ExtResource("1_wb4ux")
+coin = ExtResource("2_xqwyl")

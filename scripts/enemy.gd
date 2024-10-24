@@ -5,6 +5,8 @@ const SPEED = 1.0
 @export var repulsionArea : Area2D
 @export var attackRadius : Area2D
 @onready var attack_rate_timer = $attack_rate
+@onready var attack_buffer = $attack_buffer
+@onready var coin_death_effect = load("res://coin_death_effect.tscn")
 
 var repulsionForce_array = []
 var enemy_units = []
@@ -16,6 +18,7 @@ var atk_dmg = 10.0
 var able_to_attack = true
 var health = 20.0
 
+signal enemy_killed(enemy)
 
 func _ready():
 	pass
@@ -63,15 +66,18 @@ func attack(enemy):
 	else:
 		animationPlayer.play("attack_left")
 	if enemy.has_method("damage"):
-		var attack = Attack.new()
-		attack.attack_damage = atk_dmg
-		enemy.damage(attack)
+		attack_buffer.start()
 		able_to_attack = false
 		attack_rate_timer.start()
 
 func damage(attack: Attack):
 	health -= attack.attack_damage
 	if health <= 0:
+		enemy_killed.emit(self)
+		var new_coin_death_effect = coin_death_effect.instantiate()
+		new_coin_death_effect.position = global_position
+		get_tree().current_scene.add_child(new_coin_death_effect)
+		new_coin_death_effect.set_coin_amount(10)
 		queue_free()
 
 func select_enemy():
@@ -105,3 +111,10 @@ func _on_replusion_force_body_exited(body):
 
 func _on_attack_rate_timeout():
 	able_to_attack = true
+
+
+func _on_attack_buffer_timeout():
+	var attack = Attack.new()
+	attack.attack_damage = atk_dmg
+	if enemy:
+		enemy.damage(attack)

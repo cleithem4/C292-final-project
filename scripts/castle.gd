@@ -14,6 +14,7 @@ var ATTACK_DAMAGE = 20.0
 var able_to_attack = true
 
 func _ready():
+	health = MAX_HEALTH
 	updateHealthDisplay()
 
 func _process(_delta):
@@ -22,9 +23,6 @@ func _process(_delta):
 		if able_to_attack:
 			shoot_fireball(pos)
 			able_to_attack = false
-			fire_particles.hide()
-			reload.start()
-
 
 func damage(attack: Attack):
 	health -= attack.attack_damage
@@ -39,8 +37,6 @@ func updateHealthDisplay():
 
 func animate_progress_bar(target_value: float, duration: float):
 	var tween = get_tree().create_tween()
-	# Stop any previous animations on the tween
-	# Start a new tween to animate the progress bar value
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(health_progress_bar, "value", target_value,duration)
 
@@ -50,7 +46,8 @@ func shoot_fireball(targ):
 	fireball.enemy_hit.connect(_on_enemy_hit)
 	fireball.global_position = fireball_spawn.global_position
 	fireball.set_target(targ)
-	
+	fire_particles.hide()
+	reload.start()
 	
 
 func _on_enemy_hit(enemy):
@@ -60,7 +57,12 @@ func _on_enemy_hit(enemy):
 		attack.attack_position = self.global_position
 		enemy.damage(attack)
 
-
 func _on_reload_timeout():
 	fire_particles.show()
 	able_to_attack = true
+
+
+func _on_coin_area_body_entered(body):
+	if body.is_in_group("coin"):
+		body.queue_free()
+		Global.money += 5

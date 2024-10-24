@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="C292FinalProject"
-run/main_scene="res://main.tscn"
+run/main_scene="res://UI/upgrade_menu.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*res://Global.gd"
 
 [display]
 
