@@ -8,14 +8,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nawp6"]
 size = Vector2(212, 282)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a6v6g"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwb2x"]
 bg_color = Color(0, 0, 0, 0.34902)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxy27"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uejtm"]
 bg_color = Color(0.988235, 0.52549, 0.486275, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -23,8 +23,8 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="Theme" id="Theme_8783t"]
-ProgressBar/styles/background = SubResource("StyleBoxFlat_a6v6g")
-ProgressBar/styles/fill = SubResource("StyleBoxFlat_hxy27")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_kwb2x")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_uejtm")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1u60a"]
 size = Vector2(175, 203.333)

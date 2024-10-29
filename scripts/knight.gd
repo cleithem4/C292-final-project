@@ -6,10 +6,9 @@ const SPEED = 1.0
 @export var attackRadius : Area2D
 @onready var attack_rate_timer = $attack_rate
 @onready var attack_buffer = $attack_buffer
-@onready var coin_death_effect = load("res://coin_death_effect.tscn")
+
 
 var repulsionForce_array = []
-var buildings = []
 var enemy_units = []
 var enemy = null
 var screen_size = Vector2(1280,640)
@@ -19,7 +18,6 @@ var atk_dmg = 10.0
 var able_to_attack = true
 var health = 20.0
 
-signal enemy_killed(enemy)
 
 func _ready():
 	pass
@@ -36,7 +34,7 @@ func _physics_process(delta):
 		global_position += repulsion_force
 
 
-	if enemy_units.size() != 0 or buildings.size() != 0:
+	if enemy_units.size() != 0:
 		select_enemy()
 	else:
 		enemy = null
@@ -74,11 +72,6 @@ func attack(enemy):
 func damage(attack: Attack):
 	health -= attack.attack_damage
 	if health <= 0:
-		enemy_killed.emit(self)
-		var new_coin_death_effect = coin_death_effect.instantiate()
-		new_coin_death_effect.position = global_position
-		get_tree().current_scene.add_child(new_coin_death_effect)
-		new_coin_death_effect.set_coin_amount(10)
 		queue_free()
 
 func select_enemy():
@@ -90,23 +83,13 @@ func select_enemy():
 		if distance < closest_distance:
 			enemy = e
 			closest_distance = distance
-	if enemy_units.size() == 0:
-		for e in buildings:
-			var distance = global_position.distance_to(e.global_position)
-			if distance < closest_distance:
-				enemy = e
-				closest_distance = distance
 
 
 func _on_attack_radius_body_entered(body):
-	if body.is_in_group("castle"):
-		buildings.append(body)
-	if body.is_in_group("player_units"):
+	if body.is_in_group("enemy"):
 		enemy_units.append(body)
 func _on_attack_radius_body_exited(body):
-	if body.is_in_group("castle"):
-		buildings.erase(body)
-	if body.is_in_group("player_units"):
+	if body.is_in_group("enemy"):
 		enemy_units.erase(body)
 
 func _on_replusion_force_body_entered(body):

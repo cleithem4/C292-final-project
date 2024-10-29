@@ -285,6 +285,10 @@ text = "Spawns units to protect tower"
 
 [node name="money_label" parent="." instance=ExtResource("7_k3sf6")]
 
+[node name="barracks" parent="." instance=ExtResource("4_meq6e")]
+position = Vector2(767, 465)
+scale = Vector2(0.3, 0.3)
+
 [connection signal="pressed" from="upgrades" to="." method="_on_upgrades_pressed"]
 [connection signal="pressed" from="start_next_wave" to="." method="_on_start_next_wave_pressed"]
 [connection signal="pressed" from="CanvasLayer/close" to="." method="_on_close_pressed"]

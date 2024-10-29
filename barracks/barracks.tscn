@@ -395,7 +395,7 @@ texture_region_size = Vector2i(70, 70)
 tile_size = Vector2i(70, 70)
 sources/0 = SubResource("TileSetAtlasSource_jpned")
 
-[node name="barracks" type="TileMap"]
+[node name="level_one_barracks_sprite" type="TileMap"]
 tile_set = SubResource("TileSet_gpgti")
 format = 2
 layer_0/tile_data = PackedInt32Array(-65537, 458752, 6, -131073, 393216, 26, -65538, 393216, 24, -131074, 393216, 24, -262144, 393216, 22, -196609, 262144, 23, -131072, 393216, 22, -196608, 393216, 22, -196610, 393216, 24, -262146, 458752, 19, -327680, 458752, 17, -262145, 524288, 12)

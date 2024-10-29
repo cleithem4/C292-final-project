@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://xlutjnpme1ke"]
+
+[ext_resource type="Script" path="res://scripts/barracks_.gd" id="1_35ar2"]
+[ext_resource type="PackedScene" uid="uid://utkkh2lh2lg8" path="res://barracks/barracks.tscn" id="1_awq03"]
+[ext_resource type="FontFile" uid="uid://cowla0c68jgo8" path="res://assets/Merchandise-X31Za.ttf" id="3_vhktk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ujkf"]
+size = Vector2(126, 164)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a6v6g"]
+bg_color = Color(0, 0, 0, 0.34902)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxy27"]
+bg_color = Color(0.988235, 0.52549, 0.486275, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Theme" id="Theme_dgjif"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_a6v6g")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_hxy27")
+
+[node name="Barracks_" type="StaticBody2D"]
+script = ExtResource("1_35ar2")
+
+[node name="level_one_barracks_sprite" parent="." instance=ExtResource("1_awq03")]
+position = Vector2(19, 43)
+scale = Vector2(0.6, 0.6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, -83)
+shape = SubResource("RectangleShape2D_2ujkf")
+
+[node name="health_bar" type="ProgressBar" parent="."]
+offset_left = -71.0
+offset_top = -155.0
+offset_right = 75.0
+offset_bottom = -128.0
+theme = SubResource("Theme_dgjif")
+value = 50.0
+show_percentage = false
+
+[node name="BoxContainer" type="BoxContainer" parent="health_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -26.0
+offset_right = -1.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="health_bar/BoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_vhktk")
+theme_override_font_sizes/font_size = 40
+text = "5"
