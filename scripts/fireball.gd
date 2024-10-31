@@ -9,12 +9,15 @@ var stopping_distance = 10.0
 @onready var despawn = $despawn
 signal enemy_hit(enemy)
 var despawn_timer_started = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	linear_velocity = direction * speed
 	animated_sprite.play("default")
+	
 
 func _physics_process(delta):
+	scale = Vector2(Global.get_fireball_value("scale"),Global.get_fireball_value("scale"))
 	# Calculate the direction to the target
 	var direction = global_position.direction_to(target)
 	

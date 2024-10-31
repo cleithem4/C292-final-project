@@ -2,19 +2,23 @@ extends StaticBody2D
 
 @onready var health_label = $health_bar/BoxContainer/Label
 @onready var health_progress_bar = $health_bar
+@onready var unit_spawn = $unit_spawn_location
+@onready var Knight = load("res://knight/knight.tscn")
 
 
 var health = 50
 var MAX_HEALTH = 50
 
+var knights_list = []
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	updateHealthDisplay()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
 func damage(attack: Attack):
@@ -32,3 +36,18 @@ func animate_progress_bar(target_value: float, duration: float):
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(health_progress_bar, "value", target_value,duration)
+
+func spawn_knight():
+	var knight = Knight.instantiate()
+	get_tree().root.add_child(knight)
+	knight.global_position = unit_spawn.global_position
+	knight.scale = Vector2(1.0,1.0)
+	knights_list.append(knight)
+
+
+func _on_spawn_knight_pressed():
+	spawn_knight()
+
+
+func _on_money_label_spawn_knight():
+	spawn_knight()

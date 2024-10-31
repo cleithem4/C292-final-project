@@ -162,19 +162,21 @@ script = ExtResource("1_2olbb")
 repulsionArea = NodePath("replusionForce")
 attackRadius = NodePath("attackRadius")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_8e6fl")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1.16149e-10, -4)
 rotation = -0.226869
 texture = ExtResource("1_hkhee")
 flip_h = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_8e6fl")
-
 [node name="attackRadius" type="Area2D" parent="."]
 visible = false
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attackRadius"]
 visible = false
@@ -187,6 +189,8 @@ libraries = {
 
 [node name="replusionForce" type="Area2D" parent="."]
 visible = false
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="replusionForce"]
 position = Vector2(0, 0.5)
@@ -198,6 +202,9 @@ one_shot = true
 [node name="attack_buffer" type="Timer" parent="."]
 wait_time = 0.3
 one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+target_desired_distance = 20.0
 
 [connection signal="body_entered" from="attackRadius" to="." method="_on_attack_radius_body_entered"]
 [connection signal="body_exited" from="attackRadius" to="." method="_on_attack_radius_body_exited"]

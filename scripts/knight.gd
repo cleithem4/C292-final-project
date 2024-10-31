@@ -6,23 +6,31 @@ const SPEED = 1.0
 @export var attackRadius : Area2D
 @onready var attack_rate_timer = $attack_rate
 @onready var attack_buffer = $attack_buffer
-
+@onready var level_one_sprite = $knight_sprite/level_one
+@onready var level_five_sprite = $knight_sprite/level_five
+@onready var nav_agent = $NavigationAgent2D
+@onready var level_ten_sprite = $knight_sprite/level_ten
+@onready var level_fifteen_sprite = $knight_sprite/level_fifteen
 
 var repulsionForce_array = []
 var enemy_units = []
 var enemy = null
 var screen_size = Vector2(1280,640)
 var dead = false
-var attack_radius = 100.0
+var attack_radius = 20.0
 var atk_dmg = 10.0
 var able_to_attack = true
 var health = 20.0
+var attacking = false
+var spread_radius = 10.0
 
 
 func _ready():
-	pass
+	Global.barracks_upgraded.connect(_on_barracks_upgraded)
+	_on_barracks_upgraded()
 
 func _physics_process(delta):
+	
 	if dead:
 		return
 	velocity = Vector2.ZERO
@@ -41,17 +49,43 @@ func _physics_process(delta):
 
 
 	if enemy != null:
-		var direction = global_position.direction_to(enemy.global_position)
-		velocity += SPEED * direction
-		global_position += velocity * delta
-		if global_position.distance_to(enemy.global_position) < attack_radius:
+		# Get enemy's collision shape size (e.g., assume circle radius for simplicity)
+		var enemy_radius = 0.0
+		if enemy is CollisionObject2D and enemy.get_child_count() > 0:
+			var collision_shape = enemy.get_child(0)
+			if collision_shape is CollisionShape2D:
+				var shape = collision_shape.shape
+				if shape is CircleShape2D:
+					enemy_radius = shape.radius
+				elif shape is RectangleShape2D:
+					enemy_radius = max(shape.extents.x, shape.extents.y)
+
+		# Calculate target position aligned with enemy's y-axis
+		var total_radius = attack_radius + enemy_radius
+		var target_position = Vector2(
+			enemy.global_position.x + sign(global_position.x - enemy.global_position.x) * total_radius,  # Adjusted for attack distance
+			enemy.global_position.y  # Align on the y-axis
+		)
+
+		# Set the target position for the NavigationAgent
+		var target_offset_y = randf_range(-spread_radius, spread_radius)  # Random offset in the y-axis
+		target_position.y += target_offset_y  # Apply the offset to the y-axis
+		nav_agent.set_target_position(target_position)
+
+		# Check if the AI has reached the target position
+		if global_position.distance_to(target_position) > 10: # Allow slight tolerance
+			var next_position = nav_agent.get_next_path_position()
+			velocity += (next_position - global_position).normalized() * SPEED
+		else:
+			# Stop moving and attack if within range
 			velocity = Vector2.ZERO
 			if able_to_attack:
 				attack(enemy)
-			return
-	if velocity.length() > 0:
+				return
+			
+	if velocity.length() > 0 and !attacking:
 		animationPlayer.play("walk")
-	else:
+	elif !attacking:
 		animationPlayer.play("idle")
 	global_position.x = clamp(global_position.x,0,screen_size.x)
 	global_position.y = clamp(global_position.y,0,screen_size.y)
@@ -60,6 +94,7 @@ func _physics_process(delta):
 
 
 func attack(enemy):
+	attacking = true
 	if global_position.x < enemy.global_position.x:
 		animationPlayer.play("attack")
 	else:
@@ -92,17 +127,9 @@ func _on_attack_radius_body_exited(body):
 	if body.is_in_group("enemy"):
 		enemy_units.erase(body)
 
-func _on_replusion_force_body_entered(body):
-	if body != self and body.is_in_group("unit"):
-		repulsionForce_array.append(body)
-
-
-func _on_replusion_force_body_exited(body):
-	if body != self and body.is_in_group("unit"):
-		repulsionForce_array.erase(body)
-
 
 func _on_attack_rate_timeout():
+	attacking = false
 	able_to_attack = true
 
 
@@ -111,3 +138,39 @@ func _on_attack_buffer_timeout():
 	attack.attack_damage = atk_dmg
 	if enemy:
 		enemy.damage(attack)
+
+func _on_barracks_upgraded():
+	health = Global.get_barracks_value("health")
+	atk_dmg = Global.get_barracks_value("damage")
+	
+	var level = Global.get_barracks_value("level")
+	if level > 14:
+		level_five_sprite.hide()
+		level_one_sprite.hide()
+		level_ten_sprite.hide()
+		level_fifteen_sprite.show()
+	elif level > 9:
+		level_five_sprite.hide()
+		level_one_sprite.hide()
+		level_ten_sprite.show()
+		level_fifteen_sprite.hide()
+	elif level > 4:
+		level_five_sprite.show()
+		level_one_sprite.hide()
+		level_ten_sprite.hide()
+		level_fifteen_sprite.hide()
+	else:
+		level_five_sprite.hide()
+		level_one_sprite.show()
+		level_ten_sprite.hide()
+		level_fifteen_sprite.hide()
+		
+
+func _on_repulsion_area_body_entered(body):
+	if body != self and body.is_in_group("unit"):
+		repulsionForce_array.append(body)
+
+
+func _on_repulsion_area_body_exited(body):
+	if body != self and body.is_in_group("unit"):
+		repulsionForce_array.erase(body)

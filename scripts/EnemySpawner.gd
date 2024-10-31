@@ -61,7 +61,6 @@ func start_wave():
 	
 	
 func wave_complete():
-	Global.wave_complete()
 	wave_complete_timer.start()
 	
 
@@ -75,4 +74,5 @@ func _on_spawn_enemy_timeout():
 
 
 func _on_wave_complete_timeout():
+	Global.wave_complete()
 	get_tree().change_scene_to_file("res://UI/upgrade_menu.tscn")

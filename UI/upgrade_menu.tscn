@@ -1,12 +1,17 @@
-[gd_scene load_steps=17 format=3 uid="uid://2adxyhyo8v4v"]
+[gd_scene load_steps=23 format=3 uid="uid://2adxyhyo8v4v"]
 
 [ext_resource type="Texture2D" uid="uid://drjn1tqtafkab" path="res://assets/kenney_tiny-town/Tilemap/tilemap_packed.png" id="1_gv63l"]
 [ext_resource type="Script" path="res://scripts/upgrade_menu.gd" id="1_rfm4q"]
 [ext_resource type="PackedScene" uid="uid://da7oqtg762f8v" path="res://castle/level_one_castle_sprite.tscn" id="2_jy03i"]
 [ext_resource type="PackedScene" uid="uid://utkkh2lh2lg8" path="res://barracks/barracks.tscn" id="4_meq6e"]
+[ext_resource type="StyleBox" uid="uid://1ylow8xah4d8" path="res://UI_assets/red_button_normal.tres" id="5_8qb8d"]
 [ext_resource type="FontFile" uid="uid://cowla0c68jgo8" path="res://assets/Merchandise-X31Za.ttf" id="5_oh53y"]
 [ext_resource type="Texture2D" uid="uid://cqcgmbfd3px1m" path="res://assets/lock.png" id="6_smylx"]
+[ext_resource type="StyleBox" uid="uid://dwli7i8nu3ppd" path="res://UI_assets/red_button_pressed.tres" id="6_uw0nu"]
 [ext_resource type="PackedScene" uid="uid://cu5kie5h7p2db" path="res://money_label.tscn" id="7_k3sf6"]
+[ext_resource type="PackedScene" uid="uid://ww2oynrubo0x" path="res://assets/fire_particles.tscn" id="9_cvlkp"]
+[ext_resource type="PackedScene" uid="uid://c1vd2ta12esrp" path="res://knight/knight.tscn" id="9_xlx70"]
+[ext_resource type="Texture2D" uid="uid://dk4oali8m435x" path="res://assets/fireball_sprite/img_21.png" id="10_5tujc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xqbhm"]
 texture = ExtResource("1_gv63l")
@@ -146,9 +151,9 @@ texture = ExtResource("1_gv63l")
 [sub_resource type="TileSet" id="TileSet_s3ahh"]
 sources/0 = SubResource("TileSetAtlasSource_xqbhm")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wxgxi"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gwc20"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htpu5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8p5ff"]
 bg_color = Color(0.219608, 0.219608, 0.219608, 1)
 border_width_bottom = 10
 border_color = Color(0.101961, 0.101961, 0.101961, 1)
@@ -158,7 +163,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 expand_margin_top = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wtdds"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_77rlc"]
 bg_color = Color(0.219608, 0.219608, 0.219608, 1)
 border_color = Color(0.101961, 0.101961, 0.101961, 1)
 corner_radius_top_left = 10
@@ -169,30 +174,33 @@ corner_radius_bottom_left = 10
 [sub_resource type="Theme" id="Theme_y8bkr"]
 Button/font_sizes/font_size = 16
 Button/fonts/font = ExtResource("5_oh53y")
-Button/styles/focus = SubResource("StyleBoxEmpty_wxgxi")
-Button/styles/hover = SubResource("StyleBoxFlat_htpu5")
-Button/styles/normal = SubResource("StyleBoxFlat_htpu5")
-Button/styles/pressed = SubResource("StyleBoxFlat_wtdds")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2t8x2"]
-bg_color = Color(0.917647, 0.258824, 0.258824, 1)
-border_width_bottom = 25
-border_color = Color(0.576471, 0.113725, 0.12549, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-expand_margin_top = 25.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72o6n"]
-bg_color = Color(0.917647, 0.258824, 0.258824, 1)
-border_color = Color(0.101961, 0.101961, 0.101961, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+Button/styles/focus = SubResource("StyleBoxEmpty_gwc20")
+Button/styles/hover = SubResource("StyleBoxFlat_8p5ff")
+Button/styles/normal = SubResource("StyleBoxFlat_8p5ff")
+Button/styles/pressed = SubResource("StyleBoxFlat_77rlc")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tl0ta"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0xfg"]
+bg_color = Color(0.219608, 0.219608, 0.219608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yko21"]
+bg_color = Color(0.854902, 0.219608, 0.219608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y83l8"]
+bg_color = Color(0.219608, 0.690196, 0.890196, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="UpgradeMenu" type="Node2D"]
 script = ExtResource("1_rfm4q")
@@ -225,14 +233,18 @@ offset_bottom = 217.0
 scale = Vector2(0.5, 0.5)
 theme = SubResource("Theme_y8bkr")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_2t8x2")
-theme_override_styles/hover = SubResource("StyleBoxFlat_2t8x2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_72o6n")
+theme_override_styles/normal = ExtResource("5_8qb8d")
+theme_override_styles/hover = ExtResource("5_8qb8d")
+theme_override_styles/pressed = ExtResource("6_uw0nu")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tl0ta")
 text = "Start Next Wave"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="barracks" parent="." instance=ExtResource("4_meq6e")]
 visible = false
+position = Vector2(764, 449)
+scale = Vector2(0.3, 0.3)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_left = 143.0
@@ -251,7 +263,7 @@ position = Vector2(263, 221)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("6_smylx")
 
-[node name="Button" type="Button" parent="CanvasLayer"]
+[node name="purchase_barracks" type="Button" parent="CanvasLayer"]
 offset_left = 219.0
 offset_top = 304.0
 offset_right = 396.0
@@ -259,7 +271,18 @@ offset_bottom = 370.0
 scale = Vector2(0.5, 0.5)
 theme = SubResource("Theme_y8bkr")
 theme_override_font_sizes/font_size = 24
-text = "Unlock Barracks
+text = "Upgrade Barracks
+$50"
+
+[node name="purchase_fireball" type="Button" parent="CanvasLayer"]
+offset_left = 430.0
+offset_top = 303.0
+offset_right = 609.0
+offset_bottom = 369.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_y8bkr")
+theme_override_font_sizes/font_size = 24
+text = "Upgrade Fireball
 $50"
 
 [node name="close" type="Button" parent="CanvasLayer"]
@@ -283,12 +306,117 @@ offset_bottom = 242.4
 theme_override_fonts/normal_font = ExtResource("5_oh53y")
 text = "Spawns units to protect tower"
 
-[node name="money_label" parent="." instance=ExtResource("7_k3sf6")]
+[node name="fireball_panel" type="Panel" parent="CanvasLayer"]
+offset_left = 425.0
+offset_top = 164.0
+offset_right = 527.0
+offset_bottom = 282.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x0xfg")
 
-[node name="barracks" parent="." instance=ExtResource("4_meq6e")]
-position = Vector2(767, 465)
-scale = Vector2(0.3, 0.3)
+[node name="fireball" type="Node2D" parent="CanvasLayer/fireball_panel"]
+position = Vector2(53, 56)
+scale = Vector2(0.5, 0.5)
+metadata/_edit_group_ = true
+
+[node name="fire_particles" parent="CanvasLayer/fireball_panel/fireball" instance=ExtResource("9_cvlkp")]
+
+[node name="fireball_sprite" type="Sprite2D" parent="CanvasLayer/fireball_panel/fireball"]
+position = Vector2(-5, 15)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("10_5tujc")
+
+[node name="fireball_scale" type="Panel" parent="CanvasLayer"]
+offset_left = 430.0
+offset_top = 246.0
+offset_right = 522.0
+offset_bottom = 277.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_yko21")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/fireball_scale"]
+layout_mode = 0
+offset_right = 186.0
+offset_bottom = 65.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_oh53y")
+theme_override_font_sizes/font_size = 36
+text = "Scale 0.5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="barracks_info" type="Node2D" parent="CanvasLayer"]
+
+[node name="health_panel" type="Panel" parent="CanvasLayer/barracks_info"]
+offset_left = 302.0
+offset_top = 207.0
+offset_right = 356.0
+offset_bottom = 238.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_yko21")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/barracks_info/health_panel"]
+layout_mode = 0
+offset_right = 110.0
+offset_bottom = 65.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_oh53y")
+theme_override_font_sizes/font_size = 36
+text = "HP 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="level_panel" type="Panel" parent="CanvasLayer/barracks_info"]
+offset_left = 302.0
+offset_top = 175.0
+offset_right = 357.0
+offset_bottom = 206.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x0xfg")
+
+[node name="Label" type="Label" parent="CanvasLayer/barracks_info/level_panel"]
+layout_mode = 0
+offset_right = 112.0
+offset_bottom = 65.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_oh53y")
+theme_override_font_sizes/font_size = 56
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="unit_panel" type="Panel" parent="CanvasLayer/barracks_info"]
+offset_left = 165.0
+offset_top = 185.0
+offset_right = 220.0
+offset_bottom = 253.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x0xfg")
+
+[node name="knight" parent="CanvasLayer/barracks_info/unit_panel" instance=ExtResource("9_xlx70")]
+position = Vector2(26, 44)
+scale = Vector2(2, 2)
+
+[node name="damage_panel" type="Panel" parent="CanvasLayer/barracks_info"]
+offset_left = 302.0
+offset_top = 240.0
+offset_right = 356.0
+offset_bottom = 271.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y83l8")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/barracks_info/damage_panel"]
+layout_mode = 0
+offset_right = 108.0
+offset_bottom = 65.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_oh53y")
+theme_override_font_sizes/font_size = 36
+text = "DMG 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="money_label" parent="." instance=ExtResource("7_k3sf6")]
 
 [connection signal="pressed" from="upgrades" to="." method="_on_upgrades_pressed"]
 [connection signal="pressed" from="start_next_wave" to="." method="_on_start_next_wave_pressed"]
+[connection signal="pressed" from="CanvasLayer/purchase_barracks" to="." method="_on_purchase_barracks_pressed"]
+[connection signal="pressed" from="CanvasLayer/purchase_fireball" to="." method="_on_purchase_fireball_pressed"]
 [connection signal="pressed" from="CanvasLayer/close" to="." method="_on_close_pressed"]

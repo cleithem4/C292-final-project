@@ -46,6 +46,7 @@ func shoot_fireball(targ):
 	fireball.enemy_hit.connect(_on_enemy_hit)
 	fireball.global_position = fireball_spawn.global_position
 	fireball.set_target(targ)
+	fireball.scale = Vector2(Global.get_fireball_value("scale"),Global.get_fireball_value("scale"))
 	fire_particles.hide()
 	reload.start()
 	

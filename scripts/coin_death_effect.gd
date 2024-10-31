@@ -16,7 +16,7 @@ func set_coin_amount(coins):
 		COIN_VALUE *= 2
 		coins_spawned /= 2
 	remainder = int(coins) % 10
-	spawn_coins()
+	call_deferred("spawn_coins")
 
 # Function to spawn coins in random directions
 func spawn_coins():

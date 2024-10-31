@@ -1,7 +1,74 @@
-[gd_scene load_steps=3 format=3 uid="uid://cu5kie5h7p2db"]
+[gd_scene load_steps=13 format=3 uid="uid://cu5kie5h7p2db"]
 
 [ext_resource type="Texture2D" uid="uid://xi5ehos3iunx" path="res://assets/coin_11.png" id="1_5xa7m"]
 [ext_resource type="Script" path="res://scripts/money_label.gd" id="1_h18xq"]
+[ext_resource type="FontFile" uid="uid://cowla0c68jgo8" path="res://assets/Merchandise-X31Za.ttf" id="3_36t41"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wxgxi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htpu5"]
+bg_color = Color(0.219608, 0.219608, 0.219608, 1)
+border_width_bottom = 10
+border_color = Color(0.101961, 0.101961, 0.101961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wtdds"]
+bg_color = Color(0.219608, 0.219608, 0.219608, 1)
+border_color = Color(0.101961, 0.101961, 0.101961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Theme" id="Theme_v7hhe"]
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("3_36t41")
+Button/styles/focus = SubResource("StyleBoxEmpty_wxgxi")
+Button/styles/hover = SubResource("StyleBoxFlat_htpu5")
+Button/styles/normal = SubResource("StyleBoxFlat_htpu5")
+Button/styles/pressed = SubResource("StyleBoxFlat_wtdds")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmlhu"]
+bg_color = Color(0.305882, 0.447059, 0.733333, 1)
+border_width_bottom = 25
+border_color = Color(0.184314, 0.298039, 0.521569, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 25.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o871a"]
+bg_color = Color(0.305882, 0.447059, 0.733333, 1)
+border_color = Color(0.184314, 0.298039, 0.521569, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3k3jg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mmw4"]
+bg_color = Color(0.207843, 0.207843, 0.207843, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g545l"]
+bg_color = Color(0.811765, 0.866667, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="money_label" type="CanvasLayer"]
 script = ExtResource("1_h18xq")
@@ -28,3 +95,66 @@ size_flags_horizontal = 3
 theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/normal_font_size = 32
 text = "20"
+
+[node name="Button" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 1032.0
+offset_top = 528.0
+offset_right = 1282.0
+offset_bottom = 641.0
+size_flags_horizontal = 3
+color = Color(0.12549, 0.12549, 0.12549, 0.741176)
+
+[node name="spawn_reinforcements" type="Button" parent="ColorRect2"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 27.0
+offset_right = 388.0
+offset_bottom = 175.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_v7hhe")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_qmlhu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qmlhu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_o871a")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3k3jg")
+text = "Spawn Reinforcements"
+
+[node name="ProgressBar" type="ProgressBar" parent="ColorRect2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.937
+anchor_top = 0.443
+anchor_right = 0.937
+anchor_bottom = 0.443
+offset_left = -25.25
+offset_top = -39.059
+offset_right = 3.74999
+offset_bottom = 51.941
+theme_override_styles/background = SubResource("StyleBoxFlat_8mmw4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_g545l")
+value = 25.0
+fill_mode = 3
+show_percentage = false
+
+[node name="wave" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -82.0
+offset_top = -17.0
+offset_right = 82.0
+offset_bottom = 97.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_36t41")
+theme_override_font_sizes/font_size = 56
+text = "Wave 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="ColorRect2/spawn_reinforcements" to="." method="_on_spawn_reinforcements_pressed"]
