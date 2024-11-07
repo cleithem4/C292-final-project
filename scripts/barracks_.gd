@@ -41,7 +41,7 @@ func spawn_knight():
 	var knight = Knight.instantiate()
 	get_tree().root.add_child(knight)
 	knight.global_position = unit_spawn.global_position
-	knight.scale = Vector2(1.0,1.0)
+	knight.scale = Vector2(1.5,1.5)
 	knights_list.append(knight)
 
 

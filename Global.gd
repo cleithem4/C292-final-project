@@ -10,7 +10,7 @@ var barracks = {
 }
 
 var fireball = {
-	"scale" : 0.5
+	"scale" : 0.75
 }
 
 var barracks_unlocked = false

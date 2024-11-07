@@ -8,9 +8,9 @@ const SPEED = 1.0
 @onready var attack_buffer = $attack_buffer
 @onready var coin_death_effect = load("res://coin_death_effect.tscn")
 @onready var nav_agent = $NavigationAgent2D
-@onready var enemy_sprite = $enemy_sprite
+@onready var Dark_Energy_Ball = load("res://wizard/dark_energy_ball.tscn")
+@onready var wizard_sprite = $wizard_sprite
 @export var health_display : Node2D
-
 
 var repulsionForce_array = []
 var buildings = []
@@ -18,13 +18,13 @@ var enemy_units = []
 var enemy = null
 var screen_size = Vector2(1280,640)
 var dead = false
-var attack_radius = 25.0
+var attack_radius = 50.0
 var atk_dmg = 10.0
 var able_to_attack = true
 var health = 20.0
 var MAX_HEALTH = 20.0
 var attacking = false
-var spread_radius = 40.0
+var spread_radius = 20.0
 
 signal enemy_killed(enemy)
 
@@ -32,20 +32,17 @@ func _ready():
 	if Global.wave >= 10:
 		atk_dmg = 30.0
 		health = 50.0
-		MAX_HEALTH = 50.0
-		enemy_sprite.modulate = Color("ff2526")
+		wizard_sprite.modulate = Color("520c49")
 	elif Global.wave >= 5:
-		enemy_sprite.modulate = Color("ff9547")
+		wizard_sprite.modulate = Color("0fa981")
 		health = 40.0
-		MAX_HEALTH = 40.0
 		atk_dmg = 20.0
 	else:
+		wizard_sprite.modulate = Color("ffffff")
 		health = 20.0
-		MAX_HEALTH = 20.0
 		atk_dmg = 10.0
-		enemy_sprite.modulate = Color("ffffff")
+	MAX_HEALTH = health
 	health_display.update()
-	
 	nav_agent.set_target_position(Vector2.ZERO)
 
 func _physics_process(delta):
@@ -91,7 +88,7 @@ func _physics_process(delta):
 		nav_agent.set_target_position(target_position)
 
 		# Check if the AI has reached the target position
-		if global_position.distance_to(target_position) > 10: # Allow slight tolerance
+		if global_position.distance_to(target_position) > 20: # Allow slight tolerance
 			var next_position = nav_agent.get_next_path_position()
 			velocity += (next_position - global_position).normalized() * SPEED
 		else:
@@ -100,12 +97,13 @@ func _physics_process(delta):
 			if able_to_attack:
 				attack(enemy)
 				return
-			
+	if enemy!= null:
+		if global_position.x < enemy.global_position.x:
+			wizard_sprite.scale.x = 1
+		else:
+			wizard_sprite.scale.x = -1
 	if velocity.length() > 0 and !attacking:
-		animationPlayer.play("walk")
-		$enemy_sprite/level_one_sprite.rotation = 0
-		$enemy_sprite.rotation = 0
-		rotation = 0
+		animationPlayer.play("idle")
 	elif !attacking:
 		animationPlayer.play("idle")
 	global_position.x = clamp(global_position.x,0,screen_size.x)
@@ -114,17 +112,26 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-
 func attack(enemy):
 	attacking = true
 	if global_position.x < enemy.global_position.x:
-		animationPlayer.play("attack")
+		wizard_sprite.scale.x = 1
+		var right_spawn_pos = $attack_right
+		spawn_dark_energy_ball(enemy.global_position,right_spawn_pos.global_position)
 	else:
-		animationPlayer.play("attack_left")
+		wizard_sprite.scale.x = -1
+		var left_spawn_pos = $attack_left
+		spawn_dark_energy_ball(enemy.global_position,left_spawn_pos.global_position)
 	if enemy.has_method("damage"):
-		attack_buffer.start()
+		#attack_buffer.start()
 		able_to_attack = false
 		attack_rate_timer.start()
+		
+func spawn_dark_energy_ball(target,spawn_pos):
+	var dark_energy_ball = Dark_Energy_Ball.instantiate()
+	add_child(dark_energy_ball)
+	dark_energy_ball.set_target(target)
+	dark_energy_ball.global_position = spawn_pos
 
 func damage(attack: Attack):
 	health -= attack.attack_damage
@@ -135,7 +142,6 @@ func damage(attack: Attack):
 		new_coin_death_effect.position = global_position
 		get_tree().current_scene.add_child(new_coin_death_effect)
 		new_coin_death_effect.set_coin_amount(10)
-		
 		queue_free()
 
 func select_enemy():
@@ -184,5 +190,5 @@ func _on_attack_rate_timeout():
 func _on_attack_buffer_timeout():
 	var attack = Attack.new()
 	attack.attack_damage = atk_dmg
-	if is_instance_valid(enemy):
+	if enemy:
 		enemy.damage(attack)

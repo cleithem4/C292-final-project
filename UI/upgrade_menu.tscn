@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://2adxyhyo8v4v"]
+[gd_scene load_steps=24 format=3 uid="uid://2adxyhyo8v4v"]
 
 [ext_resource type="Texture2D" uid="uid://drjn1tqtafkab" path="res://assets/kenney_tiny-town/Tilemap/tilemap_packed.png" id="1_gv63l"]
 [ext_resource type="Script" path="res://scripts/upgrade_menu.gd" id="1_rfm4q"]
@@ -181,6 +181,18 @@ Button/styles/pressed = SubResource("StyleBoxFlat_77rlc")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tl0ta"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7acth"]
+bg_color = Color(0.278431, 0.278431, 0.278431, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.592157, 0.592157, 0.592157, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0xfg"]
 bg_color = Color(0.219608, 0.219608, 0.219608, 1)
 corner_radius_top_left = 10
@@ -246,13 +258,15 @@ scale = Vector2(0.3, 0.3)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_left = 143.0
-offset_top = 141.0
-offset_right = 1151.0
-offset_bottom = 536.0
-color = Color(0.270588, 0.67451, 0.388235, 1)
-metadata/_edit_lock_ = true
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.107813
+anchor_top = 0.209375
+anchor_right = 0.899219
+anchor_bottom = 0.839063
+offset_right = 1.52588e-05
+theme_override_styles/panel = SubResource("StyleBoxFlat_7acth")
+metadata/_edit_use_anchors_ = true
 
 [node name="barracks" parent="CanvasLayer" instance=ExtResource("4_meq6e")]
 position = Vector2(274, 280)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://c5tdf25yn2lx6"]
+[gd_scene load_steps=12 format=3 uid="uid://c5tdf25yn2lx6"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_2olbb"]
 [ext_resource type="Texture2D" uid="uid://j2wm6xa8544" path="res://assets/kenney_tiny-dungeon/Tiles/tile_0109.png" id="1_hkhee"]
+[ext_resource type="PackedScene" uid="uid://b0ehm5jgg6a4e" path="res://Components/unit_health_bar.tscn" id="3_moxep"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e6fl"]
 size = Vector2(16, 17)
@@ -14,7 +15,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/path = NodePath("enemy_sprite/level_one_sprite:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -26,7 +27,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("enemy_sprite/level_one_sprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -42,7 +43,7 @@ length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("enemy_sprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -54,7 +55,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("enemy_sprite:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -70,7 +71,7 @@ length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("enemy_sprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -82,7 +83,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("enemy_sprite:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -97,7 +98,7 @@ resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("enemy_sprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -109,7 +110,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("enemy_sprite:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -126,7 +127,7 @@ step = 0.03
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("enemy_sprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -138,7 +139,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("enemy_sprite:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -157,21 +158,24 @@ _data = {
 "walk": SubResource("Animation_n7xr3")
 }
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("repulsionArea", "attackRadius") groups=["enemy", "unit"]]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("repulsionArea", "attackRadius", "health_display") groups=["enemy", "unit"]]
+scale = Vector2(1.5, 1.5)
 script = ExtResource("1_2olbb")
 repulsionArea = NodePath("replusionForce")
 attackRadius = NodePath("attackRadius")
+health_display = NodePath("unit_health_bar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_8e6fl")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="enemy_sprite" type="Node2D" parent="."]
+
+[node name="level_one_sprite" type="Sprite2D" parent="enemy_sprite"]
 position = Vector2(1.16149e-10, -4)
 rotation = -0.226869
 texture = ExtResource("1_hkhee")
-flip_h = true
 
 [node name="attackRadius" type="Area2D" parent="."]
 visible = false
@@ -205,6 +209,8 @@ one_shot = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 target_desired_distance = 20.0
+
+[node name="unit_health_bar" parent="." instance=ExtResource("3_moxep")]
 
 [connection signal="body_entered" from="attackRadius" to="." method="_on_attack_radius_body_entered"]
 [connection signal="body_exited" from="attackRadius" to="." method="_on_attack_radius_body_exited"]

@@ -3,20 +3,19 @@ extends Node2D
 @onready var spawn_enemy_timer = $spawn_enemy
 @onready var wave_complete_timer = $wave_complete
 @onready var Enemy := load("res://enemy/enemy.tscn")
+@onready var Wizard := load("res://wizard/cursed_wizard.tscn")
 
 var numOfUnitsSpawned = 2
 var current_enemies = []
 var unit_type = {
-	1 : "res://enemy/enemy.tscn"
+	1 : "res://enemy/enemy.tscn",
+	2 : "res://wizard/cursed_wizard.tscn"
 }
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	start_wave()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func spawn_enemy(type):
 	Enemy = load(unit_type[type])
@@ -66,8 +65,8 @@ func wave_complete():
 
 func _on_spawn_enemy_timeout():
 	if numOfUnitsSpawned > 0:
-		#var random_type = randi_range(1, unit_type.size())
-		spawn_enemy(1)
+		var random_type = randi_range(1, unit_type.size())
+		spawn_enemy(random_type)
 		numOfUnitsSpawned -= 1
 	else:
 		spawn_enemy_timer.stop()

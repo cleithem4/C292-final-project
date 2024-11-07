@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bbxgeaa355imy" path="res://assets/fireball_sprite/img_22.png" id="15_kwyr6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w2kjm"]
-radius = 20.025
+radius = 30.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p0amu"]
 radius = 20.025
@@ -76,6 +76,7 @@ gravity_scale = 1.66533e-16
 script = ExtResource("1_j17be")
 
 [node name="fire_particles" parent="." instance=ExtResource("1_3cjbp")]
+scale = Vector2(1.2, 1.2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_w2kjm")
@@ -86,8 +87,7 @@ shape = SubResource("CircleShape2D_w2kjm")
 shape = SubResource("CircleShape2D_p0amu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, 7)
-scale = Vector2(0.5, 0.5)
+position = Vector2(-3, 17)
 sprite_frames = SubResource("SpriteFrames_4unv6")
 frame = 12
 frame_progress = 1.0

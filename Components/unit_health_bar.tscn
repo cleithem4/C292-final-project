@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0ehm5jgg6a4e"]
+
+[ext_resource type="Script" path="res://scripts/unit_health_bar.gd" id="1_8c7f4"]
+[ext_resource type="FontFile" uid="uid://cowla0c68jgo8" path="res://assets/Merchandise-X31Za.ttf" id="2_jfk0e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwb2x"]
+bg_color = Color(0, 0, 0, 0.34902)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uejtm"]
+bg_color = Color(0.988235, 0.52549, 0.486275, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Theme" id="Theme_3jijb"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_kwb2x")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_uejtm")
+
+[node name="unit_health_bar" type="Node2D"]
+script = ExtResource("1_8c7f4")
+
+[node name="health_bar" type="ProgressBar" parent="."]
+offset_left = -12.0
+offset_top = -19.0
+offset_right = 12.0
+offset_bottom = -13.0
+theme = SubResource("Theme_3jijb")
+value = 50.0
+show_percentage = false
+
+[node name="BoxContainer" type="BoxContainer" parent="health_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -5.0
+offset_right = 54.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+alignment = 1
+
+[node name="Label" type="Label" parent="health_bar/BoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jfk0e")
+theme_override_font_sizes/font_size = 36
+text = "5"

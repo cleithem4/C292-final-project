@@ -11,6 +11,7 @@ const SPEED = 1.0
 @onready var nav_agent = $NavigationAgent2D
 @onready var level_ten_sprite = $knight_sprite/level_ten
 @onready var level_fifteen_sprite = $knight_sprite/level_fifteen
+@export var health_display : Node2D
 
 var repulsionForce_array = []
 var enemy_units = []
@@ -21,6 +22,7 @@ var attack_radius = 20.0
 var atk_dmg = 10.0
 var able_to_attack = true
 var health = 20.0
+var MAX_HEALTH = 20.0
 var attacking = false
 var spread_radius = 10.0
 
@@ -28,6 +30,7 @@ var spread_radius = 10.0
 func _ready():
 	Global.barracks_upgraded.connect(_on_barracks_upgraded)
 	_on_barracks_upgraded()
+	health_display.update()
 
 func _physics_process(delta):
 	
@@ -106,6 +109,7 @@ func attack(enemy):
 
 func damage(attack: Attack):
 	health -= attack.attack_damage
+	health_display.update()
 	if health <= 0:
 		queue_free()
 
@@ -141,6 +145,7 @@ func _on_attack_buffer_timeout():
 
 func _on_barracks_upgraded():
 	health = Global.get_barracks_value("health")
+	MAX_HEALTH = health
 	atk_dmg = Global.get_barracks_value("damage")
 	
 	var level = Global.get_barracks_value("level")
@@ -164,6 +169,7 @@ func _on_barracks_upgraded():
 		level_one_sprite.show()
 		level_ten_sprite.hide()
 		level_fifteen_sprite.hide()
+	health_display.update()
 		
 
 func _on_repulsion_area_body_entered(body):

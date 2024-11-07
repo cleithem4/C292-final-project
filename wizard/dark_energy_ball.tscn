@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxsm0o2rgr05k"]
+
+[ext_resource type="Script" path="res://scripts/dark_energy_ball.gd" id="1_i3cfg"]
+[ext_resource type="Texture2D" uid="uid://c16fndhetgvbt" path="res://assets/circle_particle.png" id="1_x7tuy"]
+
+[sub_resource type="Gradient" id="Gradient_at0h6"]
+colors = PackedColorArray(0.137255, 0, 0.113725, 1, 0.658824, 0.203922, 0.411765, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1i63i"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vrl4y"]
+radius = 16.0312
+
+[node name="dark_energy_ball" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_i3cfg")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 30
+randomness = 0.5
+emission_shape = 1
+emission_sphere_radius = 7.46
+spread = 180.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 25.0
+initial_velocity_max = 25.0
+damping_min = 25.0
+damping_max = 25.0
+scale_amount_min = 2.5
+scale_amount_max = 2.5
+color_ramp = SubResource("Gradient_at0h6")
+
+[node name="CircleParticle" type="Sprite2D" parent="."]
+modulate = Color(0.152941, 0, 0.152941, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_x7tuy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_1i63i")
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("CircleShape2D_vrl4y")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
