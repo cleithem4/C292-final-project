@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ce5v6b3sbaakv"]
+[gd_scene load_steps=14 format=3 uid="uid://ce5v6b3sbaakv"]
 
 [ext_resource type="PackedScene" uid="uid://urds3bvn72tp" path="res://castle/castle.tscn" id="1_itskn"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_r324k"]
@@ -6,12 +6,35 @@
 [ext_resource type="Script" path="res://scripts/EnemySpawner.gd" id="4_wbo6c"]
 [ext_resource type="PackedScene" uid="uid://cu5kie5h7p2db" path="res://money_label.tscn" id="5_2jks8"]
 [ext_resource type="PackedScene" uid="uid://xlutjnpme1ke" path="res://barracks/barracks_.tscn" id="6_ct8nn"]
+[ext_resource type="Script" path="res://scripts/end_game_screen.gd" id="7_kqt8k"]
+[ext_resource type="FontFile" uid="uid://cowla0c68jgo8" path="res://assets/Merchandise-X31Za.ttf" id="7_ryniu"]
+[ext_resource type="Texture2D" uid="uid://xi5ehos3iunx" path="res://assets/coin_11.png" id="8_jk66r"]
+[ext_resource type="StyleBox" uid="uid://1ylow8xah4d8" path="res://UI_assets/red_button_normal.tres" id="9_i7aye"]
+[ext_resource type="StyleBox" uid="uid://dwli7i8nu3ppd" path="res://UI_assets/red_button_pressed.tres" id="10_1tw33"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_isb5t"]
+bg_color = Color(0.278431, 0.278431, 0.278431, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.592157, 0.592157, 0.592157, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="Theme" id="Theme_hmg7q"]
+Button/styles/focus = ExtResource("9_i7aye")
+Button/styles/hover = ExtResource("9_i7aye")
+Button/styles/normal = ExtResource("9_i7aye")
+Button/styles/pressed = ExtResource("10_1tw33")
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_r324k")
 
 [node name="Castle" parent="." instance=ExtResource("1_itskn")]
-position = Vector2(625, 355)
+position = Vector2(626, 355)
 
 [node name="Barracks_" parent="." instance=ExtResource("6_ct8nn")]
 visible = false
@@ -23,7 +46,7 @@ layer = -1
 [node name="Map1" parent="CanvasLayer" instance=ExtResource("4_343d0")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(644, 322)
+position = Vector2(639, 321)
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("4_wbo6c")
@@ -37,6 +60,91 @@ one_shot = true
 
 [node name="money_label" parent="." instance=ExtResource("5_2jks8")]
 
+[node name="end_game_screen" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("7_kqt8k")
+
+[node name="Panel" type="Panel" parent="end_game_screen"]
+anchors_preset = -1
+anchor_left = 0.470313
+anchor_top = 0.5
+anchor_right = 0.534375
+anchor_bottom = 0.5
+offset_left = -477.0
+offset_top = -237.0
+offset_right = 450.0
+offset_bottom = 287.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_isb5t")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="end_game_screen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -127.5
+offset_top = 19.0
+offset_right = 127.5
+offset_bottom = 84.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("7_ryniu")
+theme_override_font_sizes/font_size = 56
+text = "Battle Lost!"
+
+[node name="Label2" type="Label" parent="end_game_screen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -159.501
+offset_top = 116.0
+offset_right = 95.4995
+offset_bottom = 181.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("7_ryniu")
+theme_override_font_sizes/font_size = 32
+text = "Coins collected:"
+
+[node name="coins" type="Label" parent="end_game_screen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 108.5
+offset_top = 116.0
+offset_right = 187.5
+offset_bottom = 160.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("7_ryniu")
+theme_override_font_sizes/font_size = 32
+text = "10"
+
+[node name="Sprite2D" type="Sprite2D" parent="end_game_screen/Panel"]
+position = Vector2(589.399, 135.9)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("8_jk66r")
+
+[node name="ReturnHome" type="Button" parent="end_game_screen/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -154.501
+offset_top = -94.0003
+offset_right = 155.5
+offset_bottom = -27.0003
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_hmg7q")
+theme_override_fonts/font = ExtResource("7_ryniu")
+theme_override_font_sizes/font_size = 36
+text = "Return Home"
+
 [connection signal="timeout" from="EnemySpawner/spawn_enemy" to="EnemySpawner" method="_on_spawn_enemy_timeout"]
 [connection signal="timeout" from="EnemySpawner/wave_complete" to="EnemySpawner" method="_on_wave_complete_timeout"]
 [connection signal="spawn_knight" from="money_label" to="Barracks_" method="_on_money_label_spawn_knight"]
+[connection signal="pressed" from="end_game_screen/Panel/ReturnHome" to="end_game_screen" method="_on_return_home_pressed"]

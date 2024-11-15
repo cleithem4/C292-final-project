@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://2adxyhyo8v4v"]
+[gd_scene load_steps=28 format=3 uid="uid://2adxyhyo8v4v"]
 
 [ext_resource type="Texture2D" uid="uid://drjn1tqtafkab" path="res://assets/kenney_tiny-town/Tilemap/tilemap_packed.png" id="1_gv63l"]
 [ext_resource type="Script" path="res://scripts/upgrade_menu.gd" id="1_rfm4q"]
@@ -12,6 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://ww2oynrubo0x" path="res://assets/fire_particles.tscn" id="9_cvlkp"]
 [ext_resource type="PackedScene" uid="uid://c1vd2ta12esrp" path="res://knight/knight.tscn" id="9_xlx70"]
 [ext_resource type="Texture2D" uid="uid://dk4oali8m435x" path="res://assets/fireball_sprite/img_21.png" id="10_5tujc"]
+[ext_resource type="Texture2D" uid="uid://c7acd6ejdx3dq" path="res://assets/kenney_tiny-dungeon/Tiles/tile_0115.png" id="11_q73ps"]
+[ext_resource type="Texture2D" uid="uid://bnt3nb1gphv6b" path="res://assets/kenney_tiny-dungeon/Tiles/tile_0104.png" id="12_1vb06"]
+[ext_resource type="Texture2D" uid="uid://xi5ehos3iunx" path="res://assets/coin_11.png" id="12_bmjnx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xqbhm"]
 texture = ExtResource("1_gv63l")
@@ -200,6 +203,13 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y83l8"]
+bg_color = Color(0.219608, 0.690196, 0.890196, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yko21"]
 bg_color = Color(0.854902, 0.219608, 0.219608, 1)
 corner_radius_top_left = 10
@@ -207,8 +217,8 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y83l8"]
-bg_color = Color(0.219608, 0.690196, 0.890196, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spvtr"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -279,25 +289,36 @@ texture = ExtResource("6_smylx")
 
 [node name="purchase_barracks" type="Button" parent="CanvasLayer"]
 offset_left = 219.0
-offset_top = 304.0
-offset_right = 396.0
-offset_bottom = 370.0
+offset_top = 325.0
+offset_right = 398.0
+offset_bottom = 391.0
 scale = Vector2(0.5, 0.5)
 theme = SubResource("Theme_y8bkr")
 theme_override_font_sizes/font_size = 24
 text = "Upgrade Barracks
-$50"
+"
 
 [node name="purchase_fireball" type="Button" parent="CanvasLayer"]
 offset_left = 430.0
-offset_top = 303.0
+offset_top = 325.0
 offset_right = 609.0
-offset_bottom = 369.0
+offset_bottom = 391.0
 scale = Vector2(0.5, 0.5)
 theme = SubResource("Theme_y8bkr")
 theme_override_font_sizes/font_size = 24
-text = "Upgrade Fireball
-$50"
+text = "Upgrade Scale
+"
+
+[node name="purchase_fireball_damage" type="Button" parent="CanvasLayer"]
+offset_left = 524.0
+offset_top = 325.0
+offset_right = 703.0
+offset_bottom = 391.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_y8bkr")
+theme_override_font_sizes/font_size = 24
+text = "Upgrade Damage
+"
 
 [node name="close" type="Button" parent="CanvasLayer"]
 offset_left = 421.0
@@ -339,6 +360,38 @@ position = Vector2(-5, 15)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("10_5tujc")
 
+[node name="damage_panel" type="Panel" parent="CanvasLayer/fireball_panel"]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 78.0
+offset_right = 160.0
+offset_bottom = 109.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y83l8")
+
+[node name="Tile0104" type="Sprite2D" parent="CanvasLayer/fireball_panel/damage_panel"]
+position = Vector2(13, 16)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("12_1vb06")
+
+[node name="Label" type="Label" parent="CanvasLayer/fireball_panel/damage_panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.282
+anchor_top = 0.372
+anchor_right = -0.282
+anchor_bottom = 0.372
+offset_left = 22.228
+offset_top = -10.532
+offset_right = 116.228
+offset_bottom = 50.468
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_oh53y")
+theme_override_font_sizes/font_size = 36
+text = "20"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
 [node name="fireball_scale" type="Panel" parent="CanvasLayer"]
 offset_left = 430.0
 offset_top = 246.0
@@ -358,6 +411,82 @@ text = "Scale 0.5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="scale_cost" type="Panel" parent="CanvasLayer"]
+offset_left = 428.0
+offset_top = 285.0
+offset_right = 520.0
+offset_bottom = 316.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_spvtr")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/scale_cost"]
+position = Vector2(30, 15)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("12_bmjnx")
+
+[node name="Label2" type="Label" parent="CanvasLayer/scale_cost"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = -1.0
+offset_right = 161.0
+offset_bottom = 64.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_oh53y")
+theme_override_font_sizes/font_size = 36
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="barracts_cost" type="Panel" parent="CanvasLayer"]
+offset_left = 218.0
+offset_top = 288.0
+offset_right = 310.0
+offset_bottom = 319.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_spvtr")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/barracts_cost"]
+position = Vector2(30, 15)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("12_bmjnx")
+
+[node name="Label2" type="Label" parent="CanvasLayer/barracts_cost"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = -1.0
+offset_right = 161.0
+offset_bottom = 64.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_oh53y")
+theme_override_font_sizes/font_size = 36
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="scale_cost2" type="Panel" parent="CanvasLayer"]
+offset_left = 524.0
+offset_top = 285.0
+offset_right = 616.0
+offset_bottom = 316.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_spvtr")
+
+[node name="Label" type="Label" parent="CanvasLayer/scale_cost2"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 171.0
+offset_bottom = 64.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_oh53y")
+theme_override_font_sizes/font_size = 36
+text = "240"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/scale_cost2"]
+position = Vector2(26, 15)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("12_bmjnx")
+
 [node name="barracks_info" type="Node2D" parent="CanvasLayer"]
 
 [node name="health_panel" type="Panel" parent="CanvasLayer/barracks_info"]
@@ -366,18 +495,23 @@ offset_top = 207.0
 offset_right = 356.0
 offset_bottom = 238.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_yko21")
-metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/barracks_info/health_panel"]
 layout_mode = 0
-offset_right = 110.0
+offset_left = 8.0
+offset_right = 98.0
 offset_bottom = 65.0
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/font = ExtResource("5_oh53y")
 theme_override_font_sizes/font_size = 36
-text = "HP 1"
+text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Tile0115" type="Sprite2D" parent="CanvasLayer/barracks_info/health_panel"]
+position = Vector2(13, 15)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("11_q73ps")
 
 [node name="level_panel" type="Panel" parent="CanvasLayer/barracks_info"]
 offset_left = 302.0
@@ -406,26 +540,37 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_x0xfg")
 
 [node name="knight" parent="CanvasLayer/barracks_info/unit_panel" instance=ExtResource("9_xlx70")]
 position = Vector2(26, 44)
-scale = Vector2(2, 2)
 
-[node name="damage_panel" type="Panel" parent="CanvasLayer/barracks_info"]
+[node name="damage_panel2" type="Panel" parent="CanvasLayer/barracks_info"]
 offset_left = 302.0
 offset_top = 240.0
 offset_right = 356.0
 offset_bottom = 271.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_y83l8")
-metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer/barracks_info/damage_panel"]
-layout_mode = 0
-offset_right = 108.0
-offset_bottom = 65.0
+[node name="Tile0104" type="Sprite2D" parent="CanvasLayer/barracks_info/damage_panel2"]
+position = Vector2(13, 16)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("12_1vb06")
+
+[node name="Label" type="Label" parent="CanvasLayer/barracks_info/damage_panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.282
+anchor_top = 0.372
+anchor_right = -0.282
+anchor_bottom = 0.372
+offset_left = 22.228
+offset_top = -10.532
+offset_right = 116.228
+offset_bottom = 50.468
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/font = ExtResource("5_oh53y")
 theme_override_font_sizes/font_size = 36
-text = "DMG 1"
+text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="money_label" parent="." instance=ExtResource("7_k3sf6")]
 
@@ -433,4 +578,5 @@ vertical_alignment = 1
 [connection signal="pressed" from="start_next_wave" to="." method="_on_start_next_wave_pressed"]
 [connection signal="pressed" from="CanvasLayer/purchase_barracks" to="." method="_on_purchase_barracks_pressed"]
 [connection signal="pressed" from="CanvasLayer/purchase_fireball" to="." method="_on_purchase_fireball_pressed"]
+[connection signal="pressed" from="CanvasLayer/purchase_fireball_damage" to="." method="_on_purchase_fireball_damage_pressed"]
 [connection signal="pressed" from="CanvasLayer/close" to="." method="_on_close_pressed"]

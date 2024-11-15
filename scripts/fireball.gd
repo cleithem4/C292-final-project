@@ -17,6 +17,7 @@ func _ready():
 	
 
 func _physics_process(delta):
+	
 	scale = Vector2(Global.get_fireball_value("scale"),Global.get_fireball_value("scale"))
 	# Calculate the direction to the target
 	var direction = global_position.direction_to(target)

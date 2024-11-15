@@ -65,7 +65,10 @@ func wave_complete():
 
 func _on_spawn_enemy_timeout():
 	if numOfUnitsSpawned > 0:
-		var random_type = randi_range(1, unit_type.size())
+		var random_type = 1
+		if Global.wave > 5:
+			random_type = randi_range(1, unit_type.size())
+			
 		spawn_enemy(random_type)
 		numOfUnitsSpawned -= 1
 	else:

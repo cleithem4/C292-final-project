@@ -14,6 +14,7 @@ var ATTACK_DAMAGE = 20.0
 var able_to_attack = true
 
 func _ready():
+	ATTACK_DAMAGE = Global.get_fireball_value("damage")
 	health = MAX_HEALTH
 	updateHealthDisplay()
 
@@ -28,6 +29,7 @@ func damage(attack: Attack):
 	health -= attack.attack_damage
 	updateHealthDisplay()
 	if health <= 0:
+		Global.wave_lost.emit()
 		queue_free()
 
 func updateHealthDisplay():
@@ -66,4 +68,4 @@ func _on_reload_timeout():
 func _on_coin_area_body_entered(body):
 	if body.is_in_group("coin"):
 		body.queue_free()
-		Global.money += 5
+		Global.add_coins(5)
