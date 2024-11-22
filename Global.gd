@@ -2,7 +2,7 @@ extends Node
 
 var money = 20
 var current_wave_coins = 0
-var wave = 6
+var wave = 1
 
 var barracks = {
 	"level" : 1,
